@@ -92,5 +92,7 @@ public final class Constants {
     public static final String EXCEL_XLS = ".xls";
     public static final String EXCEL_XLSX = ".xlsx";
 
-    public static final int EXCEL_MAX_ROW = 65535;
+    public static final int EXCEL_MAX_ROW_XLS = 65535;
+
+    public static final int EXCEL_MAX_ROW_XLSX = 1048575;
 }
