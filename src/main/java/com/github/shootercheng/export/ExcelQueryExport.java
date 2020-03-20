@@ -199,6 +199,7 @@ public class ExcelQueryExport implements BaseExport {
         }
     }
 
+    @Override
     public void close() {
         if (workbook != null) {
             try {

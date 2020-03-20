@@ -53,12 +53,7 @@ public class CsvQueryExport implements BaseExport {
         } catch (Exception e) {
             throw new ExportException("export data error", e);
         }finally{
-            if (bufferedWriter != null) {
-                try {
-                    bufferedWriter.close();
-                } catch (IOException e) {
-                }
-            }
+            close();
         }
     }
 
@@ -68,5 +63,15 @@ public class CsvQueryExport implements BaseExport {
             rowData = exportParam.getRowFormat().formatRow(rowData);
         }
         bufferedWriter.append(rowData).append(exportParam.getRecordSeparator());
+    }
+
+    @Override
+    public void close() {
+        if (bufferedWriter != null) {
+            try {
+                bufferedWriter.close();
+            } catch (IOException e) {
+            }
+        }
     }
 }

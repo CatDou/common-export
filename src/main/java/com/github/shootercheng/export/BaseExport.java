@@ -35,4 +35,6 @@ public interface BaseExport {
     }
 
     void processRowData(String rowData) throws Exception;
+
+    void close();
 }
