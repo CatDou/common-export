@@ -20,6 +20,9 @@ package com.github.shootercheng.param;
 import com.github.shootercheng.define.CellFormat;
 import com.github.shootercheng.define.RowFormat;
 
+import java.lang.reflect.Method;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -47,83 +50,104 @@ public class ExportParam {
 
     private CellFormat cellFormat;
 
+    private List<Method> getterMethod;
+
     public String getHeader() {
         return header;
     }
 
-    public void setHeader(String header) {
+    public ExportParam setHeader(String header) {
         this.header = header;
+        return this;
     }
 
     public int getSum() {
         return sum;
     }
 
-    public void setSum(int sum) {
+    public ExportParam setSum(int sum) {
         this.sum = sum;
+        return this;
     }
 
     public int getPageSize() {
         return pageSize;
     }
 
-    public void setPageSize(int pageSize) {
+    public ExportParam setPageSize(int pageSize) {
         this.pageSize = pageSize;
+        return this;
     }
 
     public Map<String, Object> getSearchParam() {
         return searchParam;
     }
 
-    public void setSearchParam(Map<String, Object> searchParam) {
+    public ExportParam setSearchParam(Map<String, Object> searchParam) {
         this.searchParam = searchParam;
+        return this;
     }
 
     public String getRecordSeparator() {
         return recordSeparator;
     }
 
-    public void setRecordSeparator(String recordSeparator) {
+    public ExportParam setRecordSeparator(String recordSeparator) {
         this.recordSeparator = recordSeparator;
+        return this;
     }
 
     public String getSheetName() {
         return sheetName;
     }
 
-    public void setSheetName(String sheetName) {
+    public ExportParam setSheetName(String sheetName) {
         this.sheetName = sheetName;
+        return this;
     }
 
     public int getStartLine() {
         return startLine;
     }
 
-    public void setStartLine(int startLine) {
+    public ExportParam setStartLine(int startLine) {
         this.startLine = startLine;
+        return this;
     }
 
     public RowFormat getRowFormat() {
         return rowFormat;
     }
 
-    public void setRowFormat(RowFormat rowFormat) {
+    public ExportParam setRowFormat(RowFormat rowFormat) {
         this.rowFormat = rowFormat;
+        return this;
     }
 
     public CellFormat getCellFormat() {
         return cellFormat;
     }
 
-    public void setCellFormat(CellFormat cellFormat) {
+    public ExportParam setCellFormat(CellFormat cellFormat) {
         this.cellFormat = cellFormat;
+        return this;
     }
 
     public int getSheetIndex() {
         return sheetIndex;
     }
 
-    public void setSheetIndex(int sheetIndex) {
+    public ExportParam setSheetIndex(int sheetIndex) {
         this.sheetIndex = sheetIndex;
+        return this;
+    }
+
+    public List<Method> getGetterMethod() {
+        return getterMethod;
+    }
+
+    public ExportParam setGetterMethod(List<Method> getterMethod) {
+        this.getterMethod = getterMethod;
+        return this;
     }
 }

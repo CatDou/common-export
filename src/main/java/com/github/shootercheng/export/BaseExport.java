@@ -3,6 +3,8 @@ package com.github.shootercheng.export;
 import com.github.shootercheng.exception.ExportException;
 import com.github.shootercheng.param.ExportParam;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -11,30 +13,27 @@ import java.util.function.Function;
  * @author James
  */
 public interface BaseExport {
+    /**
+     * query page data and export
+     * @param dataGetFun query funcation
+     */
     void exportQueryPage(Function<Map<String, Object>, List<String>> dataGetFun);
 
-    default void exportCommon(Function<Map<String, Object>, List<String>> pageQueryFun, ExportParam exportParam) {
-        int sum = exportParam.getSum();
-        int pageSize = exportParam.getPageSize();
-        List<Integer> indexList = ExportCommon.calIndexList(sum, pageSize);
-        Map<String, Object> searchParam = exportParam.getSearchParam();
-        searchParam.put(Constants.PAGE_QUERY_SIZE, pageSize);
-        for (Integer index : indexList) {
-            searchParam.put(Constants.PADE_QUERY_INDEX, index);
-            List<String> queryList = pageQueryFun.apply(searchParam);
-            if (queryList != null && queryList.size() > 0) {
-                for (String rowData : queryList) {
-                    try {
-                        processRowData(rowData);
-                    } catch (Exception e) {
-                        throw new ExportException("process row data error", e);
-                    }
-                }
-            }
-        }
-    }
-
-    void processRowData(String rowData) throws Exception;
-
+    /**
+     * close stream
+     */
     void close();
+
+    /**
+     * process row data
+     * @param rowData
+     */
+    void processRowData(String rowData);
+
+    /**
+     * export data list
+     * @param dataList data list
+     * @param <T> T
+     */
+    <T> void exportList(List<T> dataList);
 }

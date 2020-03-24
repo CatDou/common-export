@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.github.shootercheng.export;
+package com.github.shootercheng.common;
 
 /**
  * Constants for this package.
@@ -95,4 +95,6 @@ public final class Constants {
     public static final int EXCEL_MAX_ROW_XLS = 65535;
 
     public static final int EXCEL_MAX_ROW_XLSX = 1048575;
+
+    public static final Object[] NO_ARGUMENTS = new Object[0];
 }

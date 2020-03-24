@@ -5,5 +5,5 @@ package com.github.shootercheng.define;
  *
  */
 public interface CellFormat {
-    String format(Integer column, String cellValue);
+    String format(String column, String cellValue);
 }

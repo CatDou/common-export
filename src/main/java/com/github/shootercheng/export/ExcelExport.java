@@ -1,5 +1,9 @@
 package com.github.shootercheng.export;
 
+import com.github.shootercheng.common.Constants;
+import com.github.shootercheng.common.ExportCommon;
+import com.github.shootercheng.common.RowQuotationFormat;
+import com.github.shootercheng.define.RowFormat;
 import com.github.shootercheng.exception.ExportException;
 import com.github.shootercheng.param.ExportParam;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -14,15 +18,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
-import static com.github.shootercheng.export.Constants.EXCEL_XLS;
-import static com.github.shootercheng.export.Constants.EXCEL_XLSX;
+import static com.github.shootercheng.common.Constants.EXCEL_XLS;
+import static com.github.shootercheng.common.Constants.EXCEL_XLSX;
 
 
 /**
  * @author James
  */
-public class ExcelQueryExport implements BaseExport {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ExcelQueryExport.class);
+public class ExcelExport implements BaseExport, QueryExport, DataListExport {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ExcelExport.class);
 
     private String filePath;
 
@@ -44,56 +48,33 @@ public class ExcelQueryExport implements BaseExport {
 
     private String excelType;
 
-    public ExcelQueryExport(String filePath, CellStyle cellStyle, boolean isTemplate, ExportParam exportParam) {
+    private RowFormat rowFormat;
+
+    public ExcelExport(String filePath, CellStyle cellStyle, boolean isTemplate, ExportParam exportParam) {
         this.filePath = filePath;
         this.exportParam = exportParam;
         this.isTemplate = isTemplate;
         this.cellStyle = cellStyle;
         this.sheetStartLine = exportParam.getStartLine();
         this.sheetIndex = exportParam.getSheetIndex();
+        this.rowFormat = new RowQuotationFormat();
         try {
             initExcel();
         } catch (IOException e) {
-            e.printStackTrace();
+            close();
+            throw new ExportException("init excel error", e);
         }
     }
 
-    public ExcelQueryExport(String templatePath, String targetPath, CellStyle cellStyle, boolean isTemplate, ExportParam exportParam) {
-        this(templatePath, cellStyle, isTemplate, exportParam);
+    public ExcelExport(String templatePath, String targetPath, CellStyle cellStyle, ExportParam exportParam) {
+        this(templatePath, cellStyle, true, exportParam);
         this.targetPath = targetPath;
     }
 
     @Override
     public void exportQueryPage(Function<Map<String, Object>, List<String>> dataGetFun) {
-        OutputStream fileOutputStream = null;
-        try {
-            exportCommon(dataGetFun, exportParam);
-            // 写入文件
-            if (!isTemplate) {
-                fileOutputStream = new FileOutputStream(filePath);
-            } else {
-                fileOutputStream = new FileOutputStream(targetPath);
-            }
-            workbook.write(fileOutputStream);
-        } catch (Exception e) {
-            LOGGER.error("export excel error");
-            throw new ExportException("export excel error", e);
-        } finally {
-            if (workbook != null) {
-                try {
-                    workbook.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (fileOutputStream != null) {
-                try {
-                    fileOutputStream.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
+        exportQuery(dataGetFun, exportParam);
+        saveExcel();
     }
 
     /**
@@ -103,6 +84,8 @@ public class ExcelQueryExport implements BaseExport {
      */
     @Override
     public void processRowData(String rowData) {
+        // 去除引号
+        rowData = rowFormat.formatRow(rowData);
         if (exportParam.getRowFormat() != null) {
             rowData = exportParam.getRowFormat().formatRow(rowData);
         }
@@ -120,7 +103,6 @@ public class ExcelQueryExport implements BaseExport {
         fillRowData(sheet, cellValues, sheetStartLine);
         sheetStartLine++;
     }
-
 
     private void initExcel() throws IOException {
         if(filePath == null || filePath.trim().length() == 0){
@@ -191,7 +173,8 @@ public class ExcelQueryExport implements BaseExport {
         for(int j = 0; j < cellValues.length; j++) {
             Cell cell = valueRow.createCell(j);
             if (exportParam.getCellFormat() != null) {
-                String cellValue = exportParam.getCellFormat().format(j, cellValues[j]);
+                String columnChar = ExportCommon.COLUMN_NUM.get(j);
+                String cellValue = exportParam.getCellFormat().format(columnChar, cellValues[j]);
                 cell.setCellValue(cellValue);
             } else {
                 cell.setCellValue(cellValues[j]);
@@ -206,6 +189,43 @@ public class ExcelQueryExport implements BaseExport {
                 workbook.close();
             } catch (IOException e) {
                 e.printStackTrace();
+            }
+        }
+    }
+
+    @Override
+    public <T> void exportList(List<T> dataList) {
+        exportList(dataList, exportParam);
+        saveExcel();
+    }
+
+    private void saveExcel() {
+        OutputStream fileOutputStream = null;
+        try {
+            // 写入文件
+            if (!isTemplate) {
+                fileOutputStream = new FileOutputStream(filePath);
+            } else {
+                fileOutputStream = new FileOutputStream(targetPath);
+            }
+            workbook.write(fileOutputStream);
+        } catch (Exception e) {
+            LOGGER.error("export excel error");
+            throw new ExportException("export excel error", e);
+        } finally {
+            if (workbook != null) {
+                try {
+                    workbook.close();
+                } catch (IOException e) {
+                    LOGGER.info("close workbook error");
+                }
+            }
+            if (fileOutputStream != null) {
+                try {
+                    fileOutputStream.close();
+                } catch (IOException e) {
+                    LOGGER.info("close file outputstream error");
+                }
             }
         }
     }

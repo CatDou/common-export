@@ -18,6 +18,7 @@
 package com.github.shootercheng.export;
 
 
+import com.github.shootercheng.common.Constants;
 import com.github.shootercheng.exception.ExportException;
 import com.github.shootercheng.param.ExportParam;
 
@@ -31,15 +32,19 @@ import java.util.function.Function;
  * export data from db
  * @author chengdu
  */
-public class CsvQueryExport implements BaseExport {
+public class CsvExport implements BaseExport,QueryExport,DataListExport {
 
     private BufferedWriter bufferedWriter;
 
     private ExportParam exportParam;
 
-    public CsvQueryExport(BufferedWriter bufferedWriter, ExportParam exportParam) {
+    private String recordSeparator;
+
+    public CsvExport(BufferedWriter bufferedWriter, ExportParam exportParam) {
         this.bufferedWriter = bufferedWriter;
         this.exportParam = exportParam;
+        this.recordSeparator = exportParam.getRecordSeparator() == null ?
+                Constants.CRLF : exportParam.getRecordSeparator();
     }
 
     /**
@@ -48,21 +53,20 @@ public class CsvQueryExport implements BaseExport {
      */
     @Override
     public void exportQueryPage(Function<Map<String, Object>, List<String>> dataGetFun) {
-        try {
-            exportCommon(dataGetFun, exportParam);
-        } catch (Exception e) {
-            throw new ExportException("export data error", e);
-        }finally{
-            close();
-        }
+        processRowData(exportParam.getHeader());
+        exportQuery(dataGetFun, exportParam);
     }
 
     @Override
-    public void processRowData(String rowData) throws Exception {
+    public void processRowData(String rowData) {
         if (exportParam.getRowFormat() != null) {
             rowData = exportParam.getRowFormat().formatRow(rowData);
         }
-        bufferedWriter.append(rowData).append(exportParam.getRecordSeparator());
+        try {
+            bufferedWriter.append(rowData).append(recordSeparator);
+        } catch (IOException e) {
+            throw new ExportException("write row data error", e);
+        }
     }
 
     @Override
@@ -73,5 +77,11 @@ public class CsvQueryExport implements BaseExport {
             } catch (IOException e) {
             }
         }
+    }
+
+    @Override
+    public <T> void exportList(List<T> dataList) {
+        processRowData(exportParam.getHeader());
+        exportList(dataList, exportParam);
     }
 }
