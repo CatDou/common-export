@@ -32,7 +32,7 @@ import java.util.function.Function;
  * export data from db
  * @author chengdu
  */
-public class CsvExport implements BaseExport,QueryExport,DataListExport {
+public class CsvExport implements BaseExport, QueryExport, DataListExport {
 
     private BufferedWriter bufferedWriter;
 

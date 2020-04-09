@@ -75,7 +75,7 @@ public class ExportCommon {
             String fieldName = fieldColumnMap.get(key);
             Method getterMethod = allBeanGetterMap.get(fieldName.toLowerCase());
             if (getterMethod == null) {
-                throw new ParamBuildException("Bean " + clazz + " not contain field getter" + fieldName +
+                throw new ParamBuildException("Bean " + clazz + " not contain field getter " + fieldName +
                         " ,please check config column map");
             }
             resultGetter.add(getterMethod);

@@ -168,7 +168,7 @@ public class ExcelExport implements BaseExport, QueryExport, DataListExport {
         }
     }
 
-    public void fillRowData(Sheet sheet, String[] cellValues, int curLine){
+    private void fillRowData(Sheet sheet, String[] cellValues, int curLine){
         Row valueRow = sheet.createRow(curLine);
         for(int j = 0; j < cellValues.length; j++) {
             Cell cell = valueRow.createCell(j);
