@@ -21,7 +21,7 @@ import com.github.shootercheng.define.CellFormat;
 import com.github.shootercheng.define.RowFormat;
 
 import java.lang.reflect.Method;
-import java.util.LinkedHashMap;
+import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Map;
 
@@ -51,6 +51,8 @@ public class ExportParam {
     private CellFormat cellFormat;
 
     private List<Method> getterMethod;
+
+    private Charset charset;
 
     public String getHeader() {
         return header;
@@ -148,6 +150,15 @@ public class ExportParam {
 
     public ExportParam setGetterMethod(List<Method> getterMethod) {
         this.getterMethod = getterMethod;
+        return this;
+    }
+
+    public Charset getCharset() {
+        return charset;
+    }
+
+    public ExportParam setCharset(Charset charset) {
+        this.charset = charset;
         return this;
     }
 }

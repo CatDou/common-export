@@ -23,7 +23,11 @@ import com.github.shootercheng.exception.ExportException;
 import com.github.shootercheng.param.ExportParam;
 
 import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -47,6 +51,21 @@ public class CsvExport implements BaseExport, QueryExport, DataListExport {
                 Constants.CRLF : exportParam.getRecordSeparator();
     }
 
+    public CsvExport(String filePath, ExportParam exportParam) {
+        Charset charset = exportParam.getCharset() == null ? Charset.defaultCharset() :
+                exportParam.getCharset();
+        try {
+            this.bufferedWriter = new BufferedWriter(new OutputStreamWriter(
+                    new FileOutputStream(filePath, true), charset));
+            this.exportParam = exportParam;
+            this.recordSeparator = exportParam.getRecordSeparator() == null ?
+                    Constants.CRLF : exportParam.getRecordSeparator();
+        } catch (FileNotFoundException e) {
+            close();
+            throw new ExportException("init bufferwriter error");
+        }
+    }
+
     /**
      * export data from db
      * @param dataGetFun query function
@@ -55,6 +74,7 @@ public class CsvExport implements BaseExport, QueryExport, DataListExport {
     public void exportQueryPage(Function<Map<String, Object>, List<String>> dataGetFun) {
         processRowData(exportParam.getHeader());
         exportQuery(dataGetFun, exportParam);
+        close();
     }
 
     @Override
@@ -83,5 +103,6 @@ public class CsvExport implements BaseExport, QueryExport, DataListExport {
     public <T> void exportList(List<T> dataList) {
         processRowData(exportParam.getHeader());
         exportList(dataList, exportParam);
+        close();
     }
 }

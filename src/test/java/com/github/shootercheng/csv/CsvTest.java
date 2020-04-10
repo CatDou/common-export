@@ -34,4 +34,17 @@ public class CsvTest extends ExportTest {
         } finally {
         }
     }
+
+    @Test
+    public void testExportCsvPath() {
+        String exportDir = "file" + File.separator + UUID.randomUUID().toString();
+        File dirFile = new File(exportDir);
+        dirFile.mkdirs();
+        String filePath = exportDir + File.separator + "test.csv";
+        ExportParam exportParam = buildUserExportParam();
+        CsvExport csvExport = new CsvExport(filePath, exportParam);
+        List<User> userList = createDataList();
+        csvExport.exportList(userList);
+
+    }
 }
