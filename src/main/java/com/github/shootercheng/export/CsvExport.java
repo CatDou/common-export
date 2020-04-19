@@ -19,6 +19,8 @@ package com.github.shootercheng.export;
 
 
 import com.github.shootercheng.common.Constants;
+import com.github.shootercheng.common.RowQuotationFormat;
+import com.github.shootercheng.define.RowFormat;
 import com.github.shootercheng.exception.ExportException;
 import com.github.shootercheng.param.ExportParam;
 
@@ -34,6 +36,7 @@ import java.util.function.Function;
 
 /**
  * export data from db
+ * or memory data
  * @author chengdu
  */
 public class CsvExport implements BaseExport, QueryExport, DataListExport {
@@ -44,11 +47,14 @@ public class CsvExport implements BaseExport, QueryExport, DataListExport {
 
     private String recordSeparator;
 
+    private RowFormat rowFormat;
+
     public CsvExport(BufferedWriter bufferedWriter, ExportParam exportParam) {
         this.bufferedWriter = bufferedWriter;
         this.exportParam = exportParam;
         this.recordSeparator = exportParam.getRecordSeparator() == null ?
                 Constants.CRLF : exportParam.getRecordSeparator();
+        this.rowFormat = new RowQuotationFormat();
     }
 
     public CsvExport(String filePath, ExportParam exportParam) {
@@ -60,6 +66,7 @@ public class CsvExport implements BaseExport, QueryExport, DataListExport {
             this.exportParam = exportParam;
             this.recordSeparator = exportParam.getRecordSeparator() == null ?
                     Constants.CRLF : exportParam.getRecordSeparator();
+            this.rowFormat = new RowQuotationFormat();
         } catch (FileNotFoundException e) {
             close();
             throw new ExportException("init bufferwriter error");
@@ -79,6 +86,7 @@ public class CsvExport implements BaseExport, QueryExport, DataListExport {
 
     @Override
     public void processRowData(String rowData) {
+        rowData = rowFormat.formatRow(rowData);
         if (exportParam.getRowFormat() != null) {
             rowData = exportParam.getRowFormat().formatRow(rowData);
         }
