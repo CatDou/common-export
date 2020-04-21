@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-package com.github.shootercheng.exception;
+package com.github.shootercheng.export.exception;
 
 /**
- * export exception
+ * core exception
  * @author chengdu
  */
 public class ExportException extends RuntimeException {

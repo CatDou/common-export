@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.github.shootercheng.common;
+package com.github.shootercheng.export.common;
 
 /**
  * Constants for this package.

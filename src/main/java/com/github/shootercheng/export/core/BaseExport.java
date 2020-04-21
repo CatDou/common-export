@@ -1,4 +1,4 @@
-package com.github.shootercheng.export;
+package com.github.shootercheng.export.core;
 
 import java.util.List;
 import java.util.Map;
@@ -9,7 +9,7 @@ import java.util.function.Function;
  */
 public interface BaseExport {
     /**
-     * query page data and export
+     * query page data and core
      * @param dataGetFun query funcation
      */
     void exportQueryPage(Function<Map<String, Object>, List<String>> dataGetFun);
@@ -21,12 +21,12 @@ public interface BaseExport {
 
     /**
      * process row data
-     * @param rowData
+     * @param rowData row data
      */
     void processRowData(String rowData);
 
     /**
-     * export data list
+     * core data list
      * @param dataList data list
      * @param <T> T
      */

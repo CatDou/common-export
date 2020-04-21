@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-package com.github.shootercheng.export;
+package com.github.shootercheng.export.core;
 
 
-import com.github.shootercheng.common.Constants;
-import com.github.shootercheng.common.RowQuotationFormat;
-import com.github.shootercheng.define.RowFormat;
-import com.github.shootercheng.exception.ExportException;
-import com.github.shootercheng.param.ExportParam;
+import com.github.shootercheng.export.common.Constants;
+import com.github.shootercheng.export.common.RowQuotationFormat;
+import com.github.shootercheng.export.define.RowFormat;
+import com.github.shootercheng.export.exception.ExportException;
+import com.github.shootercheng.export.param.ExportParam;
 
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
@@ -35,7 +35,7 @@ import java.util.Map;
 import java.util.function.Function;
 
 /**
- * export data from db
+ * core data from db
  * or memory data
  * @author chengdu
  */
@@ -74,7 +74,7 @@ public class CsvExport implements BaseExport, QueryExport, DataListExport {
     }
 
     /**
-     * export data from db
+     * core data from db
      * @param dataGetFun query function
      */
     @Override
