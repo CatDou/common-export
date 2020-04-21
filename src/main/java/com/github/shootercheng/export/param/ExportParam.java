@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-package com.github.shootercheng.param;
+package com.github.shootercheng.export.param;
 
-import com.github.shootercheng.define.CellFormat;
-import com.github.shootercheng.define.RowFormat;
+import com.github.shootercheng.export.define.CellFormat;
+import com.github.shootercheng.export.define.RowFormat;
 
 import java.lang.reflect.Method;
 import java.nio.charset.Charset;
@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * export param for db query export
+ * core param for db query core
  * @author chengdu
  */
 public class ExportParam {

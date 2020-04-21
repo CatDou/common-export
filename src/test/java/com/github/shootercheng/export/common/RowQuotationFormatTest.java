@@ -1,4 +1,4 @@
-package com.github.shootercheng.common;
+package com.github.shootercheng.export.common;
 
 import org.junit.Assert;
 import org.junit.Test;

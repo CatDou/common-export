@@ -1,4 +1,4 @@
-package com.github.shootercheng.utils;
+package com.github.shootercheng.export.utils;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -236,8 +236,8 @@ public class ReflectUtil {
 
     /**
      * field name to field getter
-     * @param clazz
-     * @return
+     * @param clazz bean class
+     * @return field name to field setter
      */
     public static Map<String, Method> getBeanGetterMap(Class<?> clazz) {
         if (clazz == null) {

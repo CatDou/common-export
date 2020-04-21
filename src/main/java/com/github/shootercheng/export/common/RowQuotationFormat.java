@@ -1,6 +1,6 @@
-package com.github.shootercheng.common;
+package com.github.shootercheng.export.common;
 
-import com.github.shootercheng.define.RowFormat;
+import com.github.shootercheng.export.define.RowFormat;
 
 /**
  * @author James

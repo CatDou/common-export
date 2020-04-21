@@ -1,8 +1,8 @@
-package com.github.shootercheng.reflect;
+package com.github.shootercheng.export.reflect;
 
-import com.github.shootercheng.common.Constants;
-import com.github.shootercheng.common.ExportCommon;
-import com.github.shootercheng.models.User;
+import com.github.shootercheng.export.common.Constants;
+import com.github.shootercheng.export.common.ExportCommon;
+import com.github.shootercheng.export.models.User;
 import org.junit.Assert;
 import org.junit.Test;
 

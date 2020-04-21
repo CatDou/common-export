@@ -1,4 +1,4 @@
-package com.github.shootercheng.define;
+package com.github.shootercheng.export.define;
 
 /**
  * @author James

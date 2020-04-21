@@ -1,11 +1,11 @@
-package com.github.shootercheng.export;
+package com.github.shootercheng.export.core;
 
-import com.github.shootercheng.common.Constants;
-import com.github.shootercheng.common.ExportCommon;
-import com.github.shootercheng.common.RowQuotationFormat;
-import com.github.shootercheng.define.RowFormat;
-import com.github.shootercheng.exception.ExportException;
-import com.github.shootercheng.param.ExportParam;
+import com.github.shootercheng.export.common.Constants;
+import com.github.shootercheng.export.common.ExportCommon;
+import com.github.shootercheng.export.common.RowQuotationFormat;
+import com.github.shootercheng.export.define.RowFormat;
+import com.github.shootercheng.export.exception.ExportException;
+import com.github.shootercheng.export.param.ExportParam;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -26,8 +26,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
-import static com.github.shootercheng.common.Constants.EXCEL_XLS;
-import static com.github.shootercheng.common.Constants.EXCEL_XLSX;
+import static com.github.shootercheng.export.common.Constants.EXCEL_XLS;
+import static com.github.shootercheng.export.common.Constants.EXCEL_XLSX;
 
 
 /**
@@ -87,8 +87,7 @@ public class ExcelExport implements BaseExport, QueryExport, DataListExport {
 
     /**
      * 默认使用 ',' 号拼接
-     * @param rowData
-     * @throws Exception
+     * @param rowData row data
      */
     @Override
     public void processRowData(String rowData) {
@@ -218,8 +217,8 @@ public class ExcelExport implements BaseExport, QueryExport, DataListExport {
             }
             workbook.write(fileOutputStream);
         } catch (Exception e) {
-            LOGGER.error("export excel error");
-            throw new ExportException("export excel error", e);
+            LOGGER.error("core excel error");
+            throw new ExportException("core excel error", e);
         } finally {
             if (workbook != null) {
                 try {
