@@ -58,8 +58,8 @@ public class CsvExport implements BaseExport, QueryExport, DataListExport {
     }
 
     public CsvExport(String filePath, ExportParam exportParam) {
-        Charset charset = exportParam.getCharset() == null ? Charset.defaultCharset() :
-                exportParam.getCharset();
+        Charset charset = exportParam.getCharset() == null ?
+                Charset.defaultCharset() : exportParam.getCharset();
         try {
             this.bufferedWriter = new BufferedWriter(new OutputStreamWriter(
                     new FileOutputStream(filePath, true), charset));
