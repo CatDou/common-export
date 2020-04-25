@@ -8,7 +8,7 @@
 <dependency>
 	<groupId>com.github.catdou</groupId>
 	<artifactId>common-export</artifactId>
-	<version>1.2</version>
+	<version>1.3</version>
 </dependency>
 ```
 ### Export from db
