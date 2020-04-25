@@ -27,9 +27,9 @@ public class ExportTest {
                 .setGetterMethod(getterMethod);
     }
 
-    public List<User> createDataList() {
+    public List<User> createDataList(int num) {
         List<User> userList = new ArrayList<>(100);
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < num; i++) {
             User user = new User("james" + i, "****", i);
             userList.add(user);
         }

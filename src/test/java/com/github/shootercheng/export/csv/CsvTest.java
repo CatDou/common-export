@@ -24,7 +24,7 @@ public class CsvTest extends ExportTest {
         File dirFile = new File(exportDir);
         dirFile.mkdirs();
         String filePath = exportDir + File.separator + "test.csv";
-        List<User> userList = createDataList();
+        List<User> userList = createDataList(100);
         try (BufferedWriter bufferedWriter = new BufferedWriter(
                 new OutputStreamWriter(new FileOutputStream(filePath, true),
                         StandardCharsets.UTF_8))) {
@@ -43,7 +43,7 @@ public class CsvTest extends ExportTest {
         String filePath = exportDir + File.separator + "test.csv";
         ExportParam exportParam = buildUserExportParam();
         CsvExport csvExport = new CsvExport(filePath, exportParam);
-        List<User> userList = createDataList();
+        List<User> userList = createDataList(100);
         csvExport.exportList(userList);
 
     }
