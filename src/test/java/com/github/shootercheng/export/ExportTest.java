@@ -28,7 +28,7 @@ public class ExportTest {
     }
 
     public List<User> createDataList(int num) {
-        List<User> userList = new ArrayList<>(100);
+        List<User> userList = new ArrayList<>(num);
         for (int i = 0; i < num; i++) {
             User user = new User("james" + i, "****", i);
             userList.add(user);
