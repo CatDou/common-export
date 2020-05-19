@@ -35,7 +35,7 @@ import java.util.Map;
 import java.util.function.Function;
 
 /**
- * core data from db
+ * export data from db
  * or memory data
  * @author chengdu
  */
@@ -74,7 +74,7 @@ public class CsvExport implements BaseExport, QueryExport, DataListExport {
     }
 
     /**
-     * core data from db
+     * export data from db
      * @param dataGetFun query function
      */
     @Override
